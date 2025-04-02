@@ -3,18 +3,16 @@ package server
 import (
 	"log/slog"
 	"net/http"
+	"os"
+
+	"github.com/ostaltsovmichael/todolist/internal/routers"
 )
-
-// This handler will be delete
-func testHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Test seccsess"))
-
-}
 
 func Server() {
 
+	port := os.Getenv("PORT")
 	slog.Info("Server started")
-	err := http.ListenAndServe("localhost:4000", http.HandlerFunc(testHandler))
+	err := http.ListenAndServe("localhost:"+port, routers.GetRouters())
 	if err != nil {
 		panic("Failed to connect to the server")
 	}
